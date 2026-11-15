@@ -1368,6 +1368,20 @@ const main = (config) => {
   //
   // ================================================================
 
+  // Compatibility group for airport configs that reference "🚀 直连".
+  const legacyDirectGroup = {
+
+    "name": "🚀 直连",
+
+    "type": "select",
+
+    "proxies": [
+      "DIRECT"
+    ]
+
+  };
+
+
   config["proxy-groups"] =
 
     finalPreservedGroups
@@ -1379,6 +1393,8 @@ const main = (config) => {
       .concat([
 
         domesticDirectGroup,
+
+        legacyDirectGroup,
 
         mainSelector
 
