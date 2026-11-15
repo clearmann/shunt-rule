@@ -1,6 +1,8 @@
 payload:
   # Binance 主站 / API / 合约（含全部子域名）
   - DOMAIN-SUFFIX,binance.com
+  # Binance 备用 API 域名（AWS Route53 托管）
+  - DOMAIN-SUFFIX,binanceapis.com
   # Binance 美国站
   - DOMAIN-SUFFIX,binance.us
   # Binance 备用域名
