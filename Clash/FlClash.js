@@ -304,8 +304,10 @@ const main = (config) => {
   // 9. Perfect-Rules icon CDN
   // ================================================================
 
+  // Icons are served from this repository (clearmann/shunt-rule),
+  // so custom icons like Binance.png work after pushing to main.
   const iconBaseURL =
-    "https://cdn.jsdelivr.net/gh/n0de-sudo/Perfect-Rules@main/Clash/icons/";
+    "https://cdn.jsdelivr.net/gh/clearmann/shunt-rule@main/Clash/icons/";
 
 
   const groupIcons = {
@@ -337,6 +339,8 @@ const main = (config) => {
     "Apple": "Apple.png",
 
     "Microsoft": "Microsoft.png",
+
+    "Binance": "Binance.png",
 
     "香港": "Hong_Kong.png",
 
@@ -403,6 +407,8 @@ const main = (config) => {
     "Apple": true,
 
     "Microsoft": true,
+
+    "Binance": true,
 
     "香港": true,
 
@@ -478,6 +484,9 @@ const main = (config) => {
       /steam/i,
       /tiktok/i,
       /telegram/i,
+
+      /binance/i,
+      /币安/i,
 
       /twitter/i,
       /x\.com/i,
@@ -867,8 +876,10 @@ const main = (config) => {
   // 19. Remote Rule Provider base URL
   // ================================================================
 
+  // Rules are served from this repository (clearmann/shunt-rule),
+  // so custom rule sets like binance.yaml work after pushing to main.
   const ruleBaseURL =
-    "https://cdn.jsdelivr.net/gh/n0de-sudo/Perfect-Rules@main/Clash/rules/";
+    "https://cdn.jsdelivr.net/gh/clearmann/shunt-rule@main/Clash/rules/";
 
 
   // ================================================================
@@ -934,6 +945,9 @@ const main = (config) => {
 
     "Microsoft":
       createRuleProvider("microsoft.yaml"),
+
+    "Binance":
+      createRuleProvider("binance.yaml"),
 
     "NetworkTest":
       createRuleProvider("network-test.yaml")
@@ -1348,6 +1362,8 @@ const main = (config) => {
 
     createBusinessGroup("Microsoft"),
 
+    createBusinessGroup("Binance"),
+
     createBusinessGroup("网络检测")
 
   ];
@@ -1418,6 +1434,7 @@ const main = (config) => {
   // TikTok
   // Apple
   // Microsoft
+  // Binance
   // Private
   // China
   // MATCH
@@ -1529,6 +1546,13 @@ const main = (config) => {
     // --------------------------------------------------------------
 
     "RULE-SET,Microsoft,Microsoft",
+
+
+    // --------------------------------------------------------------
+    // Binance
+    // --------------------------------------------------------------
+
+    "RULE-SET,Binance,Binance",
 
 
     // --------------------------------------------------------------

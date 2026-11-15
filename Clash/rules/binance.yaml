@@ -1,0 +1,14 @@
+payload:
+  # Binance 主站 / API / 合约（含全部子域名）
+  - DOMAIN-SUFFIX,binance.com
+  # Binance 美国站
+  - DOMAIN-SUFFIX,binance.us
+  # Binance 备用域名
+  - DOMAIN-SUFFIX,binance.me
+  - DOMAIN-SUFFIX,binance.info
+  - DOMAIN-SUFFIX,binance.net
+  - DOMAIN-SUFFIX,binance.org
+  # Binance 行情数据下载
+  - DOMAIN-SUFFIX,binance.vision
+  # Binance 静态资源 CDN（网页 / App 资源加载必需）
+  - DOMAIN-SUFFIX,bnbstatic.com
