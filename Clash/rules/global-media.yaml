@@ -1,0 +1,23 @@
+payload:
+  # Discord
+  - GEOSITE,discord
+  - DOMAIN-SUFFIX,discord.com
+  - DOMAIN-SUFFIX,discord.gg
+  - DOMAIN-SUFFIX,discordapp.com
+  - DOMAIN-SUFFIX,discordapp.net
+  - DOMAIN-SUFFIX,discord.media
+  # Meta（Facebook / Instagram / WhatsApp / Threads）
+  - GEOSITE,meta
+  - GEOSITE,facebook
+  - GEOSITE,instagram
+  - GEOSITE,whatsapp
+  - GEOSITE,threads
+  # 海外流媒体（Disney+ / Twitch / HBO / Hulu / Prime Video / 巴哈姆特 / BBC / DAZN）
+  - GEOSITE,disney
+  - GEOSITE,twitch
+  - GEOSITE,hbo
+  - GEOSITE,hulu
+  - GEOSITE,primevideo
+  - GEOSITE,bahamut
+  - GEOSITE,bbc
+  - GEOSITE,dazn

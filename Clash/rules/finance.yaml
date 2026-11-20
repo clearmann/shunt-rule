@@ -1,0 +1,30 @@
+payload:
+  # PayPal
+  - GEOSITE,paypal
+  - DOMAIN-SUFFIX,paypal.com
+  - DOMAIN-SUFFIX,paypalobjects.com
+  - DOMAIN-SUFFIX,paypal.me
+  # Stripe
+  - GEOSITE,stripe
+  - DOMAIN-SUFFIX,stripe.com
+  - DOMAIN-SUFFIX,stripe.network
+  - DOMAIN-SUFFIX,stripecdn.com
+  # Wise（原 TransferWise）
+  - GEOSITE,wise
+  - DOMAIN-SUFFIX,wise.com
+  - DOMAIN-SUFFIX,transferwise.com
+  # 跨境收款 / 电子钱包
+  - DOMAIN-SUFFIX,payoneer.com
+  - DOMAIN-SUFFIX,revolut.com
+  - DOMAIN-SUFFIX,airwallex.com
+  - DOMAIN-SUFFIX,skrill.com
+  # 海外券商与行情
+  - DOMAIN-SUFFIX,interactivebrokers.com
+  - DOMAIN-SUFFIX,interactivebrokers.com.hk
+  - DOMAIN-SUFFIX,ibkr.com
+  - DOMAIN-SUFFIX,schwab.com
+  - DOMAIN-SUFFIX,fidelity.com
+  - DOMAIN-SUFFIX,moomoo.com
+  - DOMAIN-SUFFIX,itiger.com
+  - DOMAIN-SUFFIX,tigerbrokers.com
+  - DOMAIN-SUFFIX,tradingview.com

@@ -1,5 +1,25 @@
 payload:
+  # 加密货币综合 Geosite（涵盖主流交易所与 Web3 服务）
   - GEOSITE,category-cryptocurrency
+  - GEOSITE,binance
+  - GEOSITE,okx
+  - GEOSITE,bybit
+  # Binance 主站 / API / 合约（含全部子域名）
+  - DOMAIN-SUFFIX,binance.com
+  # Binance 备用 API 域名（AWS Route53 托管）
+  - DOMAIN-SUFFIX,binanceapis.com
+  # Binance 美国站
+  - DOMAIN-SUFFIX,binance.us
+  # Binance 备用域名
+  - DOMAIN-SUFFIX,binance.me
+  - DOMAIN-SUFFIX,binance.info
+  - DOMAIN-SUFFIX,binance.net
+  - DOMAIN-SUFFIX,binance.org
+  # Binance 行情数据下载
+  - DOMAIN-SUFFIX,binance.vision
+  # Binance 静态资源 CDN（网页 / App 资源加载必需）
+  - DOMAIN-SUFFIX,bnbstatic.com
+  # 其他行情与工具站点
   - DOMAIN-SUFFIX,long.xyz
   - DOMAIN-SUFFIX,aicoin.com
   - DOMAIN-SUFFIX,aicoinstorge.com

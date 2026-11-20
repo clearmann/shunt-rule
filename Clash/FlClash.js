@@ -72,7 +72,7 @@ const main = (config) => {
 
     "enhanced-mode": "fake-ip",
 
-    "fake-ip-range": "172.19.0.1/16",
+    "fake-ip-range": "198.18.0.1/16",
 
     "fake-ip-filter": [
       "+.lan",
@@ -163,7 +163,14 @@ const main = (config) => {
         "+.openai.com",
         "+.chatgpt.com",
         "+.anthropic.com",
-        "+.claude.ai"
+        "+.claude.ai",
+        "+.x.com",
+        "+.twitter.com",
+        "+.twimg.com",
+        "+.t.co",
+        "+.reddit.com",
+        "+.discord.com",
+        "+.discordapp.com"
       ]
 
     }
@@ -184,21 +191,20 @@ const main = (config) => {
     "stack": "gvisor",
 
     "dns-hijack": [
-      "0.0.0.0:53"
+      "any:53",
+      "tcp://any:53"
     ],
 
     "auto-route": true,
 
-    "auto-detect-interface": false,
+    "auto-detect-interface": true,
 
     "strict-route": true,
 
     "mtu": 1280,
 
-    "inet4-address": [
-      "172.19.0.1/30"
-    ],
-
+    // Do not set inet4-address in 172.16.0.0/12, which conflicts with
+    // FlClash bypassPrivateRoute (route-exclude-address) and breaks TUN.
     "auto-redirect": false,
 
     "disable-icmp-forwarding": true
@@ -305,7 +311,7 @@ const main = (config) => {
   // ================================================================
 
   // Icons are served from this repository (clearmann/shunt-rule),
-  // so custom icons like Binance.png work after pushing to main.
+  // so custom icons work after pushing to main.
   const iconBaseURL =
     "https://cdn.jsdelivr.net/gh/clearmann/shunt-rule@main/Clash/icons/";
 
@@ -326,6 +332,8 @@ const main = (config) => {
 
     "网络检测": "Network-test.png",
 
+    "广告拦截": "Advertising.png",
+
     "Netflix": "Netflix.png",
 
     "Spotify": "Spotify.png",
@@ -334,13 +342,21 @@ const main = (config) => {
 
     "Telegram": "Telegram.png",
 
+    "Twitter": "Twitter.png",
+
+    "Reddit": "Reddit.png",
+
     "TikTok": "TikTok.png",
+
+    "海外媒体": "ForeignMedia.png",
 
     "Apple": "Apple.png",
 
     "Microsoft": "Microsoft.png",
 
-    "Binance": "Binance.png",
+    "Crypto": "Crypto.png",
+
+    "金融支付": "Finance.png",
 
     "香港": "Hong_Kong.png",
 
@@ -394,6 +410,8 @@ const main = (config) => {
 
     "网络检测": true,
 
+    "广告拦截": true,
+
     "Netflix": true,
 
     "Spotify": true,
@@ -402,13 +420,21 @@ const main = (config) => {
 
     "Telegram": true,
 
+    "Twitter": true,
+
+    "Reddit": true,
+
     "TikTok": true,
+
+    "海外媒体": true,
 
     "Apple": true,
 
     "Microsoft": true,
 
-    "Binance": true,
+    "Crypto": true,
+
+    "金融支付": true,
 
     "香港": true,
 
@@ -487,9 +513,22 @@ const main = (config) => {
 
       /binance/i,
       /币安/i,
+      /crypto/i,
+      /币圈/i,
+
+      /paypal/i,
+      /金融/i,
+      /支付/i,
+
+      /广告/i,
 
       /twitter/i,
+      /推特/i,
       /x\.com/i,
+      /reddit/i,
+      /discord/i,
+      /meta/i,
+      /whatsapp/i,
       /facebook/i,
       /instagram/i,
 
@@ -876,10 +915,10 @@ const main = (config) => {
   // 19. Remote Rule Provider base URL
   // ================================================================
 
-  // Rules are served from this repository (clearmann/shunt-rule),
-  // so custom rule sets like binance.yaml work after pushing to main.
+  // Rules are served directly from GitHub Raw to avoid jsDelivr @main CDN
+  // staleness after pushing rule updates to main.
   const ruleBaseURL =
-    "https://cdn.jsdelivr.net/gh/clearmann/shunt-rule@main/Clash/rules/";
+    "https://raw.githubusercontent.com/clearmann/shunt-rule/main/Clash/rules/";
 
 
   // ================================================================
@@ -913,6 +952,9 @@ const main = (config) => {
 
   config["rule-providers"] = {
 
+    "Ads":
+      createRuleProvider("ads.yaml"),
+
     "AI":
       createRuleProvider("ai.yaml"),
 
@@ -937,8 +979,17 @@ const main = (config) => {
     "Telegram":
       createRuleProvider("telegram.yaml"),
 
+    "Twitter":
+      createRuleProvider("twitter.yaml"),
+
+    "Reddit":
+      createRuleProvider("reddit.yaml"),
+
     "TikTok":
       createRuleProvider("tiktok.yaml"),
+
+    "GlobalMedia":
+      createRuleProvider("global-media.yaml"),
 
     "Apple":
       createRuleProvider("apple.yaml"),
@@ -946,8 +997,11 @@ const main = (config) => {
     "Microsoft":
       createRuleProvider("microsoft.yaml"),
 
-    "Binance":
-      createRuleProvider("binance.yaml"),
+    "Crypto":
+      createRuleProvider("crypto.yaml"),
+
+    "Finance":
+      createRuleProvider("finance.yaml"),
 
     "NetworkTest":
       createRuleProvider("network-test.yaml")
@@ -1177,8 +1231,13 @@ const main = (config) => {
 
 
   // ================================================================
-  // 25. Create region URL-Test groups
+  // 25. Create region groups (manual select for configured regions,
+  //     url-test for others)
   // ================================================================
+
+  const manualRegions = {
+    "美国": true
+  };
 
   const regionGroups = [];
 
@@ -1197,30 +1256,40 @@ const main = (config) => {
     }
 
 
-    const group = {
+    const group = manualRegions[region]
+      ? {
 
-      "name": region,
+        "name": region,
 
-      "type": "url-test",
+        "type": "select",
 
-      "proxies": nodes,
+        "proxies": nodes
 
-      "url":
-        "https://www.gstatic.com/generate_204",
+      }
+      : {
 
-      "interval": 300,
+        "name": region,
 
-      "timeout": 5000,
+        "type": "url-test",
 
-      "tolerance": 50,
+        "proxies": nodes,
 
-      "lazy": true,
+        "url":
+          "https://www.gstatic.com/generate_204",
 
-      "max-failed-times": 3,
+        "interval": 300,
 
-      "expected-status": 204
+        "timeout": 5000,
 
-    };
+        "tolerance": 50,
+
+        "lazy": true,
+
+        "max-failed-times": 3,
+
+        "expected-status": 204
+
+      };
 
 
     const icon =
@@ -1338,6 +1407,29 @@ const main = (config) => {
   }
 
 
+  const adsGroup = {
+
+    "name": "广告拦截",
+
+    "type": "select",
+
+    "proxies": [
+      "REJECT",
+      "DIRECT"
+    ]
+
+  };
+
+
+  const adsIcon =
+    getGroupIcon("广告拦截");
+
+
+  if (adsIcon) {
+    adsGroup["icon"] = adsIcon;
+  }
+
+
   const businessGroups = [
 
     createBusinessGroup("AI"),
@@ -1356,15 +1448,25 @@ const main = (config) => {
 
     createBusinessGroup("Telegram"),
 
+    createBusinessGroup("Twitter"),
+
+    createBusinessGroup("Reddit"),
+
     createBusinessGroup("TikTok"),
+
+    createBusinessGroup("海外媒体"),
 
     createBusinessGroup("Apple"),
 
     createBusinessGroup("Microsoft"),
 
-    createBusinessGroup("Binance"),
+    createBusinessGroup("Crypto"),
 
-    createBusinessGroup("网络检测")
+    createBusinessGroup("金融支付"),
+
+    createBusinessGroup("网络检测"),
+
+    adsGroup
 
   ];
 
@@ -1423,6 +1525,7 @@ const main = (config) => {
   // Rule Provider order:
   //
   // NetworkTest
+  // Ads
   // AI
   // YouTube
   // Google
@@ -1431,10 +1534,14 @@ const main = (config) => {
   // Spotify
   // Steam
   // Telegram
+  // Twitter
+  // Reddit
   // TikTok
+  // GlobalMedia
   // Apple
   // Microsoft
-  // Binance
+  // Crypto
+  // Finance
   // Private
   // China
   // MATCH
@@ -1469,6 +1576,13 @@ const main = (config) => {
     // --------------------------------------------------------------
 
     "RULE-SET,NetworkTest,网络检测",
+
+
+    // --------------------------------------------------------------
+    // Ads
+    // --------------------------------------------------------------
+
+    "RULE-SET,Ads,广告拦截",
 
 
     // --------------------------------------------------------------
@@ -1528,10 +1642,31 @@ const main = (config) => {
 
 
     // --------------------------------------------------------------
+    // Twitter
+    // --------------------------------------------------------------
+
+    "RULE-SET,Twitter,Twitter",
+
+
+    // --------------------------------------------------------------
+    // Reddit
+    // --------------------------------------------------------------
+
+    "RULE-SET,Reddit,Reddit",
+
+
+    // --------------------------------------------------------------
     // TikTok
     // --------------------------------------------------------------
 
     "RULE-SET,TikTok,TikTok",
+
+
+    // --------------------------------------------------------------
+    // Global Media (Discord / Meta / Disney+ / Streaming)
+    // --------------------------------------------------------------
+
+    "RULE-SET,GlobalMedia,海外媒体",
 
 
     // --------------------------------------------------------------
@@ -1549,10 +1684,17 @@ const main = (config) => {
 
 
     // --------------------------------------------------------------
-    // Binance
+    // Crypto (includes Binance / OKX / Bybit / Web3)
     // --------------------------------------------------------------
 
-    "RULE-SET,Binance,Binance",
+    "RULE-SET,Crypto,Crypto",
+
+
+    // --------------------------------------------------------------
+    // Finance & Payment
+    // --------------------------------------------------------------
+
+    "RULE-SET,Finance,金融支付",
 
 
     // --------------------------------------------------------------

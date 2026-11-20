@@ -1,4 +1,15 @@
 payload:
+  # GitHub Geosite
+  - GEOSITE,github
+  # GitHub 核心域名、容器镜像、Pages、Copilot 等（兜底）
   - DOMAIN-SUFFIX,github.com
   - DOMAIN-SUFFIX,githubusercontent.com
   - DOMAIN-SUFFIX,githubassets.com
+  - DOMAIN-SUFFIX,github.io
+  - DOMAIN-SUFFIX,ghcr.io
+  - DOMAIN-SUFFIX,github.dev
+  - DOMAIN-SUFFIX,githubcopilot.com
+  - DOMAIN-SUFFIX,githubapp.com
+  - DOMAIN-SUFFIX,github.blog
+  - DOMAIN-SUFFIX,githubstatus.com
+  - DOMAIN-SUFFIX,git.io
