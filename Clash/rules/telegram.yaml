@@ -1,2 +1,3 @@
 payload:
   - GEOSITE,telegram
+  - GEOIP,telegram,no-resolve
