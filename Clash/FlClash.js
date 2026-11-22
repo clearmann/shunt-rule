@@ -70,11 +70,16 @@ const main = (config) => {
 
     "ipv6": false,
 
+    "respect-rules": true,
+
     "enhanced-mode": "fake-ip",
 
     "fake-ip-range": "198.18.0.1/16",
 
     "fake-ip-filter": [
+      "geosite:private",
+      "geosite:cn",
+
       "+.lan",
       "+.local",
       "+.localhost",
@@ -82,7 +87,16 @@ const main = (config) => {
 
       "time.*.com",
       "time.*.gov",
+      "time.*.edu.cn",
+      "time.*.apple.com",
+      "ntp.*.com",
       "pool.ntp.org",
+
+      "+.stun.*.*",
+      "+.stun.*.*.*",
+      "+.stun.*.*.*.*",
+      "stun.*.*",
+      "stun.*.*.*",
 
       "+.push.apple.com",
 
@@ -95,9 +109,13 @@ const main = (config) => {
 
       "connectivitycheck.android.com",
 
-      "www.msftconnecttest.com",
+      "*.msftconnecttest.com",
 
-      "www.msftncsi.com"
+      "*.msftncsi.com",
+
+      "localhost.ptlogin2.qq.com",
+
+      "localhost.sec.qq.com"
     ],
 
     "default-nameserver": [
@@ -122,7 +140,7 @@ const main = (config) => {
         "https://doh.pub/dns-query"
       ],
 
-      "geolocation-!cn": [
+      "geosite:geolocation-!cn": [
         "https://cloudflare-dns.com/dns-query",
         "https://dns.google/dns-query"
       ]
@@ -149,6 +167,11 @@ const main = (config) => {
       "geoip": true,
 
       "geoip-code": "CN",
+
+      "ipcidr": [
+        "240.0.0.0/4",
+        "0.0.0.0/32"
+      ],
 
       "geosite": [
         "gfw"
@@ -952,6 +975,9 @@ const main = (config) => {
 
   config["rule-providers"] = {
 
+    "Direct":
+      createRuleProvider("direct.yaml"),
+
     "Ads":
       createRuleProvider("ads.yaml"),
 
@@ -1524,6 +1550,7 @@ const main = (config) => {
   //
   // Rule Provider order:
   //
+  // Direct
   // NetworkTest
   // Ads
   // AI
@@ -1543,7 +1570,9 @@ const main = (config) => {
   // Crypto
   // Finance
   // Private
-  // China
+  // China (GEOSITE)
+  // Non-China (GEOSITE)
+  // China (GEOIP)
   // MATCH
   //
   // YouTube MUST be before Google.
@@ -1569,6 +1598,13 @@ const main = (config) => {
     "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
 
     "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
+
+
+    // --------------------------------------------------------------
+    // Custom Direct
+    // --------------------------------------------------------------
+
+    "RULE-SET,Direct,国内直连",
 
 
     // --------------------------------------------------------------
@@ -1712,7 +1748,19 @@ const main = (config) => {
 
     "GEOSITE,cn,国内直连",
 
-    "GEOIP,cn,国内直连,no-resolve",
+
+    // --------------------------------------------------------------
+    // Non-China (match known overseas domains before GEOIP DNS lookup)
+    // --------------------------------------------------------------
+
+    "GEOSITE,geolocation-!cn,一键代理",
+
+
+    // --------------------------------------------------------------
+    // China IP (resolve remaining unknown domains to catch unlisted CN apps)
+    // --------------------------------------------------------------
+
+    "GEOIP,cn,国内直连",
 
 
     // --------------------------------------------------------------

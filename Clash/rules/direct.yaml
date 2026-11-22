@@ -1,0 +1,10 @@
+payload:
+  # 国内 DoH / DNS 服务（配合 respect-rules 确保直连）
+  - DOMAIN,dns.alidns.com
+  - DOMAIN,doh.pub
+  - DOMAIN-SUFFIX,alidns.com
+  - DOMAIN-SUFFIX,doh.pub
+  # 自定义国内直连例外（如走海外 CDN 的国内软件、银行/政务、或需按进程放行的应用）
+  # 示例：
+  # - DOMAIN-SUFFIX,example.com
+  # - PROCESS-NAME,WeChat
