@@ -157,6 +157,8 @@ const main = (config) => {
       "https://doh.pub/dns-query"
     ],
 
+    "direct-nameserver-follow-policy": true,
+
     "fallback": [
       "https://cloudflare-dns.com/dns-query",
       "https://dns.google/dns-query"
