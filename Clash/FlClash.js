@@ -130,16 +130,6 @@ const main = (config) => {
 
     "nameserver-policy": {
 
-      "geosite:cn": [
-        "https://dns.alidns.com/dns-query",
-        "https://doh.pub/dns-query"
-      ],
-
-      "geosite:private": [
-        "https://dns.alidns.com/dns-query",
-        "https://doh.pub/dns-query"
-      ],
-
       "geosite:geolocation-!cn": [
         "https://cloudflare-dns.com/dns-query",
         "https://dns.google/dns-query"
@@ -1756,6 +1746,13 @@ const main = (config) => {
     // --------------------------------------------------------------
 
     "GEOSITE,geolocation-!cn,一键代理",
+
+
+    // --------------------------------------------------------------
+    // Private IP (resolve remaining internal domains to route direct)
+    // --------------------------------------------------------------
+
+    "GEOIP,private,国内直连",
 
 
     // --------------------------------------------------------------
